@@ -1,0 +1,37 @@
+## .NET / MSBuild
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+artifacts/
+*.binlog
+msbuild.log
+*.user
+*.suo
+*.userprefs
+project.lock.json
+project.fragment.lock.json
+*.nupkg
+*.snupkg
+
+## Rider / Visual Studio / VS Code
+.vs/
+.idea/
+.vscode/
+*.sln.docstates
+
+## MAUI build output
+[Bb]uilds/
+Platforms/Android/Resources/resource.designer.cs
+*.keystore
+*.p12
+*.mobileprovision
+
+## Local databases
+*.db
+*.db-shm
+*.db-wal
+
+## OS noise
+.DS_Store
+Thumbs.db

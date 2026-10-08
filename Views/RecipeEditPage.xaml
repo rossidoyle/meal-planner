@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:MealPlanner.ViewModels"
+             x:Class="MealPlanner.Views.RecipeEditPage"
+             x:DataType="viewModels:RecipeEditViewModel"
+             Title="{Binding Title}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20"
+                             Spacing="16">
+
+            <Label Text="{Binding OriginText}"
+                   FontSize="13"
+                   TextColor="{AppThemeBinding Light=#666666, Dark=#AAAAAA}" />
+
+            <VerticalStackLayout Spacing="6">
+                <Label Text="Name"
+                       FontAttributes="Bold" />
+                <Entry Placeholder="Pasta carbonara"
+                       Text="{Binding Name}" />
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Spacing="6">
+                <Label Text="Description"
+                       FontAttributes="Bold" />
+                <Editor Placeholder="What is it like?"
+                        Text="{Binding Description}"
+                        HeightRequest="100"
+                        AutoSize="TextChanges" />
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Spacing="6">
+                <Label Text="Servings"
+                       FontAttributes="Bold" />
+                <Stepper Value="{Binding Servings}"
+                         Minimum="1"
+                         Maximum="24"
+                         Increment="1" />
+                <Label Text="{Binding Servings, StringFormat='Serves {0}'}"
+                       FontSize="12" />
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Spacing="6">
+                <Label Text="Prep time"
+                       FontAttributes="Bold" />
+                <Stepper Value="{Binding PrepMinutes}"
+                         Minimum="0"
+                         Maximum="600"
+                         Increment="5" />
+                <Label Text="{Binding PrepMinutes, StringFormat='{0} min prep'}"
+                       FontSize="12" />
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Spacing="6">
+                <Label Text="Cook time"
+                       FontAttributes="Bold" />
+                <Stepper Value="{Binding CookMinutes}"
+                         Minimum="0"
+                         Maximum="600"
+                         Increment="5" />
+                <Label Text="{Binding CookMinutes, StringFormat='{0} min cook'}"
+                       FontSize="12" />
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Spacing="6">
+                <Label Text="Tags"
+                       FontAttributes="Bold" />
+                <Entry Placeholder="italian, quick"
+                       Text="{Binding TagsText}" />
+                <Label Text="Separate tags with commas."
+                       FontSize="12" />
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Spacing="6">
+                <Label Text="Sharing"
+                       FontAttributes="Bold" />
+                <HorizontalStackLayout Spacing="12">
+                    <Switch IsToggled="{Binding IsShared}" />
+                    <Label Text="Share this recipe with the community"
+                           VerticalOptions="Center" />
+                </HorizontalStackLayout>
+                <VerticalStackLayout Spacing="6"
+                                     IsVisible="{Binding IsShared}">
+                    <Entry Placeholder="Your name"
+                           Text="{Binding Author}" />
+                    <Label Text="Shown alongside the recipe when it's published."
+                           FontSize="12" />
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+
+            <Button Text="Save"
+                    Command="{Binding SaveCommand}" />
+
+            <Button Text="Cancel"
+                    Command="{Binding CloseCommand}" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

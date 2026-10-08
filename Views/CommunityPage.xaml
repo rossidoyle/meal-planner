@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:MealPlanner.ViewModels"
+             x:Class="MealPlanner.Views.CommunityPage"
+             x:DataType="viewModels:CommunityViewModel"
+             Title="{Binding Title}">
+
+    <Grid RowDefinitions="Auto,Auto,*">
+
+        <SearchBar Grid.Row="0"
+                   Placeholder="Search community recipes"
+                   Text="{Binding SearchText}"
+                   SearchCommand="{Binding LoadRecipesCommand}" />
+
+        <Label Grid.Row="1"
+               Margin="16,4,16,8"
+               FontSize="12"
+               TextColor="{AppThemeBinding Light=#666666, Dark=#AAAAAA}"
+               Text="Adding a recipe copies it into your library. It stays yours to edit and delete." />
+
+        <Grid Grid.Row="2">
+
+            <CollectionView ItemsSource="{Binding Recipes}"
+                            SelectionMode="None">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical"
+                                       ItemSpacing="8" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="viewModels:CommunityRecipeItem">
+                        <Border Margin="16,0,16,8"
+                                Padding="16"
+                                StrokeShape="RoundRectangle 12">
+                            <VerticalStackLayout Spacing="8">
+
+                                <Label Text="{Binding Recipe.Name}"
+                                       FontSize="18"
+                                       FontAttributes="Bold" />
+
+                                <Label FontSize="12"
+                                       TextColor="{AppThemeBinding Light=#666666, Dark=#AAAAAA}"
+                                       Text="{Binding Recipe.Author, StringFormat='by {0}'}" />
+
+                                <Label Text="{Binding Recipe.Description}"
+                                       FontSize="14"
+                                       MaxLines="3"
+                                       LineBreakMode="TailTruncation" />
+
+                                <HorizontalStackLayout Spacing="16">
+                                    <Label FontSize="12"
+                                           Text="{Binding Recipe.Servings, StringFormat='Serves {0}'}" />
+                                    <Label FontSize="12"
+                                           Text="{Binding Recipe.PrepMinutes, StringFormat='Prep {0} min'}" />
+                                    <Label FontSize="12"
+                                           Text="{Binding Recipe.CookMinutes, StringFormat='Cook {0} min'}" />
+                                </HorizontalStackLayout>
+
+                                <Button Text="Add to my library"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:CommunityViewModel}}, Path=ImportCommand}"
+                                        CommandParameter="{Binding .}"
+                                        IsEnabled="{Binding IsInLibrary, Converter={StaticResource Invert}}" />
+
+                                <Label Text="In your library"
+                                       FontSize="13"
+                                       IsVisible="{Binding IsInLibrary}"
+                                       TextColor="{AppThemeBinding Light=#2E7D32, Dark=#81C784}" />
+
+                            </VerticalStackLayout>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <VerticalStackLayout IsVisible="{Binding IsEmpty}"
+                                 Spacing="8"
+                                 HorizontalOptions="Center"
+                                 VerticalOptions="Center">
+                <Label Text="Nothing here yet"
+                       FontSize="20"
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center" />
+                <Label Text="No community recipes matched your search."
+                       FontSize="14"
+                       HorizontalTextAlignment="Center" />
+            </VerticalStackLayout>
+
+            <ActivityIndicator IsVisible="{Binding IsBusy}"
+                               IsRunning="{Binding IsBusy}"
+                               VerticalOptions="Start"
+                               HorizontalOptions="Center"
+                               Margin="0,12,0,0" />
+        </Grid>
+
+    </Grid>
+
+</ContentPage>
